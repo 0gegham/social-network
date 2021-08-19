@@ -1,0 +1,45 @@
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+
+spring:
+  application:
+    name: api-zuul-proxy
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://postgres:5432/snetwork
+    username: username
+    password: password
+
+jwt:
+  validity: 900000 # 1000 * 60 * 15
+  secret: 7o62{nDk9<)V?!;B~)(U|qb=o{<{Jd0E,tIa)/<'ki":ai[enn]AOVQoA3S8ZaK
+
+zuul:
+  routes:
+    user-service:
+      path: /api/v1/user/**
+      url: http://user-service:8081/
+      stripPrefix: false
+    friends-service:
+      path: /api/v1/friends/**
+      url: http://friends-service:8082/
+      stripPrefix: false
+    conversations-service:
+      path: /api/v1/conversations/**
+      url: http://conversations-service:8083/
+      stripPrefix: false
+    messages-service:
+      path: /api/v1/messages/**
+      url: http://messages-service:8084/
+      stripPrefix: false
+    picture-service:
+      path: /api/v1/picture/**
+      url: http://picture-service:8085/
+      stripPrefix: false
+

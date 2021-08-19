@@ -1,0 +1,18 @@
+server:
+  servlet:
+    context-path: /api/v1/picture
+  port: 8085
+
+spring:
+  application:
+    name: picture-service
+  jpa:
+    hibernate:
+        ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://postgres:5432/snetwork_picture
+    username: username
+    password: password

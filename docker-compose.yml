@@ -1,0 +1,96 @@
+version: "3.9"
+volumes:
+  databases:
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+     - "5672:5672"
+     - "15672:15672"
+  api-zuul-proxy:
+    build: api-zuul-proxy/
+    image: api-zuul-proxy
+    container_name: proxy
+    depends_on:
+      - postgres
+      - config-server
+      - user-service
+      - friends-service
+      - conversations-service
+      - messages-service
+      - picture-service
+      - eureka
+    ports:
+      - "8080:8080"
+  config-server:
+    build: config-server/
+    image: config-server
+    container_name: config
+    ports: 
+      - "9000:9000"
+    depends_on:
+      - eureka
+  conversations-service:
+    build: conversations-service/
+    image: conversations-service
+    container_name: conversations
+    depends_on:
+      - config-server
+      - postgres
+    ports: 
+      - "8083:8083"
+  friends-service:
+    build: friends-service/
+    image: friends-service
+    container_name: friends
+    depends_on:
+      - postgres
+      - config-server
+    ports:
+      - "8082:8082"
+  messages-service:
+    build: messages-service/
+    image: messages-service
+    container_name: messages
+    depends_on:
+      - config-server
+      - postgres
+      - rabbitmq
+    ports:
+      - "8084:8084"
+  picture-service:
+    build: picture-service/
+    image: picture-service
+    container_name: picture
+    depends_on:
+      - config-server
+      - postgres
+    ports:
+      - "8085:8085"
+  eureka:
+    build: service-registry/
+    image: service-registry
+    container_name: eureka
+    ports:
+      - "8761:8761"
+  user-service:
+    build: user-service/
+    image: user-service
+    container_name: user-service
+    depends_on:
+      - postgres
+      - config-server
+    ports:
+      - "8081:8081"
+  postgres:
+    image: postgres
+    container_name: postgres-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+    volumes:
+      - databases:/var/lib/postgres
+      - ./databases.sql:/docker-entrypoint-initdb.d/databases.sql

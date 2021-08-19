@@ -1,0 +1,20 @@
+server:
+  servlet:
+    context-path: /api/v1/messages
+  port: 8084
+
+spring:
+  application:
+    name: messages-service
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  amqp:
+    queue: user.queue
+    routing_key: user.routing_key
+    exchange: amq.topic
+  datasource:
+    url: jdbc:postgresql://postgres:5432/snetwork_messages
+    username: username
+    password: password
