@@ -27,7 +27,7 @@ services:
     build: config-server/
     image: config-server
     container_name: config
-    ports: 
+    ports:
       - "9000:9000"
     depends_on:
       - eureka
@@ -38,6 +38,7 @@ services:
     depends_on:
       - config-server
       - postgres
+      - eureka
     ports: 
       - "8083:8083"
   friends-service:
@@ -47,6 +48,7 @@ services:
     depends_on:
       - postgres
       - config-server
+      - eureka
     ports:
       - "8082:8082"
   messages-service:
@@ -57,6 +59,7 @@ services:
       - config-server
       - postgres
       - rabbitmq
+      - eureka
     ports:
       - "8084:8084"
   picture-service:
@@ -66,6 +69,7 @@ services:
     depends_on:
       - config-server
       - postgres
+      - eureka
     ports:
       - "8085:8085"
   eureka:
@@ -81,6 +85,7 @@ services:
     depends_on:
       - postgres
       - config-server
+      - eureka
     ports:
       - "8081:8081"
   postgres:
