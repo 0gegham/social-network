@@ -53,6 +53,10 @@ public class JwtProvider {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
     }
 
+    public long getExpirationDateTime(final String token) {
+        return getClaims(token).getBody().getExpiration().getTime();
+    }
+
     public String getToken(HttpServletRequest httpServletRequest) {
         return Optional.ofNullable(httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION))
                 .map(value -> value.replaceFirst("Bearer", "").trim())

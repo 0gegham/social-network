@@ -29,19 +29,19 @@ public class JwtServiceImpl implements JwtService {
             throw new AuthenticationCredentialsNotFoundException("Bad credentials");
         }
 
-        String token = generateToken(username);
-        return new JwtResponse(username, token);
+        return generateToken(userDetails.getUsername());
     }
 
     @Override
     public JwtResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
         String username = refreshTokenRequest.getUsername();
         UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-        String token = generateToken(userDetails.getUsername());
-        return new JwtResponse(username, token);
+        return generateToken(userDetails.getUsername());
     }
 
-    private String generateToken(String username) {
-        return jwtProvider.generateToken(username);
+    private JwtResponse generateToken(final String username) {
+        final String token = jwtProvider.generateToken(username);
+        final long exp = jwtProvider.getExpirationDateTime(token);
+        return new JwtResponse(username, token, exp);
     }
 }
