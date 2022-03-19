@@ -11,10 +11,14 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   amqp:
-    queue: user.queue
-    routing_key: user.routing_key
-    exchange: amq.topic
+    queue: queue
+    routing_key: routing_key
+    exchange: topic
+    port: 15672
+    host: localhost
+    login: guest
+    password: guest
   datasource:
-    url: jdbc:postgresql://postgres:5432/snetwork_messages
+    url: jdbc:postgresql://localhost:5432/snetwork_messages
     username: username
     password: password
