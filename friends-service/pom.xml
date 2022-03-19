@@ -22,7 +22,6 @@
         <postgresql.version>42.2.16</postgresql.version>
         <spring-cloud.version>3.0.3</spring-cloud.version>
         <org.projectlombok.version>1.18.18</org.projectlombok.version>
-        <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
     </properties>
 
     <dependencies>
@@ -65,11 +64,6 @@
             <optional>true</optional>
             <version>${org.projectlombok.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${org.mapstruct.version}</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -90,11 +84,6 @@
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                             <version>${org.projectlombok.version}</version>
-                        </path>
-                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${org.mapstruct.version}</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
